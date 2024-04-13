@@ -25,17 +25,14 @@ bool Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	// iterate all objects in the scene
-	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	// NEW -> instantiate the players using the entity manager and add them to the players list.
+	for (pugi::xml_node playerNode = config.child("player"); playerNode; playerNode = playerNode.next_sibling("player"))
 	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-	}
+		Player* player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+		player->parameters = playerNode;
 
-	if (config.child("player")) {
-		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("player");
+		players.Add(player);
+
 	}
 
 	if (config.child("map")) {
@@ -72,6 +69,10 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	// NEW -> create the necessary cameras to show the chosen DisplayType.
+	// Change the DisplayType to control how many screens will be loaded.
+	CreateCameras(DisplayType::FOUR_SCREENS);
+
 	return true;
 }
 
@@ -84,22 +85,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	float camSpeed = 1; 
-
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
-
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
-
-	// Renders the image in the center of the screen 
-	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
+	// NEW -> Update the map
+	app->map->Update(dt);
 
 	return true;
 }
@@ -121,4 +108,65 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+// NEW -> function to create the necessary cameras to display the chosen DisplayType (Hardcoded).
+void Scene::CreateCameras(DisplayType display)
+{
+	switch (display)
+	{
+	case DisplayType::ONE_SCREEN:
+
+		app->render->AddCamera({ 0, 0, 1280, 720 });
+
+		break;
+
+	case DisplayType::TWO_HORIZONTAL:
+
+		app->render->AddCamera({ 2, 2, 1276, 357 });
+		app->render->AddCamera({ 2, 361, 1276, 357 });
+
+		break;
+
+	case DisplayType::TWO_VERTICAL:
+
+		app->render->AddCamera({ 2, 2, 637, 716 });
+		app->render->AddCamera({ 641, 2, 637, 716 });
+
+		break;
+
+	case DisplayType::THREE_LEFT:
+
+		app->render->AddCamera({ 2, 2, 637, 357 });
+		app->render->AddCamera({ 641, 2, 637, 357 });
+		app->render->AddCamera({ 2, 361, 637, 357 });
+
+		break;
+
+	case DisplayType::THREE_CENTERED:
+
+		app->render->AddCamera({ 2, 2, 637, 357 });
+		app->render->AddCamera({ 641, 2, 637, 357 });
+		app->render->AddCamera({ 321, 361, 637, 357 });
+
+		break;
+
+	case DisplayType::THREE_RIGHT:
+
+		app->render->AddCamera({ 2, 2, 637, 357 });
+		app->render->AddCamera({ 641, 2, 637, 357 });
+		app->render->AddCamera({ 641, 361, 637, 357 });
+
+		break;
+
+	case DisplayType::FOUR_SCREENS:
+
+		app->render->AddCamera({ 2, 2, 637, 357 });
+		app->render->AddCamera({ 641, 2, 637, 357 });
+		app->render->AddCamera({ 2, 361, 637, 357 });
+		app->render->AddCamera({ 641, 361, 637, 357 });
+
+		break;
+
+	}
 }

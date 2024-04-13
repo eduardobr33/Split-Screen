@@ -5,6 +5,19 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 
+// NEW
+#include "Physics.h"
+
+// NEW -> enum class to manage players input keys
+enum class InputKeys {
+
+	WASD,
+	TFGH,
+	IJKL,
+	ARROWS
+
+};
+
 struct SDL_Texture;
 
 class Player : public Entity
@@ -25,12 +38,18 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-public:
-	float speed = 0.2f;
+	// NEW -> manage players movement
+	void HandleInput(InputKeys keys, b2Vec2& vel, int speed);
+
+private:
+
+	SDL_Texture* texture;
 	const char* texturePath;
-	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
-	int pickCoinFxId;
+
+	// NEW
+	int id;
+	InputKeys keys;
 };
 
 #endif // __PLAYER_H__

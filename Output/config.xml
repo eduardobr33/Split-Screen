@@ -22,8 +22,11 @@
   </audio>
 
   <scene>
+    <player x="60" y="365" texturepath="Assets/Textures/player1.png" keys = "wasd" id ="1"/>
+    <player x="160" y="365" texturepath="Assets/Textures/player2.png" keys = "tfgh" id ="2"/>
+    <player x="260" y="365" texturepath="Assets/Textures/player3.png" keys = "ijkl" id ="3"/>
+    <player x="360" y="365" texturepath="Assets/Textures/player4.png" keys = "arrows" id ="4"/>
     <map path="Assets/Maps/" name="MapTemplate.tmx"/>
-    <player x="400" y="352" texturepath="Assets/Textures/player1.png"/>
     <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>

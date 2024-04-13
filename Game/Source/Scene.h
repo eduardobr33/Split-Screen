@@ -5,6 +5,18 @@
 #include "Player.h"
 #include "Item.h"
 
+// NEW -> enum class with all the display types available in this implementation.
+enum class DisplayType
+{
+	ONE_SCREEN,
+	TWO_HORIZONTAL,
+	TWO_VERTICAL,
+	THREE_LEFT,
+	THREE_CENTERED,
+	THREE_RIGHT,
+	FOUR_SCREENS
+};
+
 struct SDL_Texture;
 
 class Scene : public Module
@@ -34,12 +46,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
+	// NEW -> function to create the necessary cameras to display the chosen DisplayType.
+	void CreateCameras(DisplayType display);
+
+	// NEW -> Set to public to access the players list
+public:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;
-	Player* player;
+
+	// NEW -> list of players initialized with the entity manager.
+	List<Player*> players;
 
 };
 
