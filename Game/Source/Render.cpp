@@ -120,7 +120,7 @@ void Render::ResetViewPort()
 	}
 }
 
-// TODO 1 - Split Screen: write a function to create a camera according to a given viewport and add it to the cameras list.
+// NEW -> write a function to create a camera according to a given viewport and add it to the cameras list.
 void Render::AddCamera(SDL_Rect viewport)
 {
 	Camera* camera = new Camera(viewport);
@@ -128,13 +128,13 @@ void Render::AddCamera(SDL_Rect viewport)
 	cameras.Add(camera);
 }
 
-// TODO 1 - Split Screen: write a function to empty the cameras list.
+// NEW -> write a function to empty the cameras list.
 void Render::ClearCameras()
 {
 	cameras.Clear();
 }
 
-// Split Screen: function to center an active camera to a player.
+// NEW -> function to center an active camera to a player.
 void Render::CenterCamera(ListItem<Camera*>* item, int player) {
 
 	// First we center the camera to the player.

@@ -85,9 +85,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	// NEW -> Update the map
-	app->map->Update(dt);
-
 	// NEW -> Create dinamically the cameras for the players
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		CreateCameras(DisplayType::ONE_SCREEN);
@@ -123,7 +120,7 @@ bool Scene::CleanUp()
 	return true;
 }
 
-// NEW -> function to create the necessary cameras to display the chosen DisplayType (Hardcoded).
+// NEW -> function to create the necessary cameras to display the chosen DisplayType
 void Scene::CreateCameras(DisplayType display)
 {
 	// Borra los jugadores sobrantes si se están creando menos cámaras que jugadores

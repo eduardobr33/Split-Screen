@@ -56,7 +56,7 @@ bool Player::Update(float dt)
 	int speed = 5;
 	b2Vec2 vel = b2Vec2(0, 0);
 
-	// TODO 2 - Split Screen: manage players movement according to active cameras, input keys and speed used.
+	// Manage players movement according to active cameras, input keys and speed used.
 	HandleInput(keys, vel, speed);
 
 	// Set the velocity of the pbody of the player.
