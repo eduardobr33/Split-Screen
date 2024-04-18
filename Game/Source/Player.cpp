@@ -54,7 +54,7 @@ bool Player::Update(float dt)
 	// Add physics to the player and update player position using physics.
 
 	int speed = 5;
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+	b2Vec2 vel = b2Vec2(0, 0);
 
 	// TODO 2 - Split Screen: manage players movement according to active cameras, input keys and speed used.
 	HandleInput(keys, vel, speed);
@@ -101,37 +101,37 @@ void Player::HandleInput(InputKeys keys, b2Vec2& vel, int speed) {
 
 		if (keys == InputKeys::WASD) {
 
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, -speed);
-			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, speed);
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) vel = b2Vec2(-speed, -GRAVITY_Y);
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) vel = b2Vec2(speed, -GRAVITY_Y);
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) vel = b2Vec2(0, -speed);
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) vel = b2Vec2(0, speed);
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) vel = b2Vec2(-speed, 0);
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) vel = b2Vec2(speed, 0);
 
 		}
 
 		if (keys == InputKeys::TFGH) {
 
-			if (app->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, -speed);
-			if (app->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, speed);
-			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) vel = b2Vec2(-speed, -GRAVITY_Y);
-			if (app->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT) vel = b2Vec2(speed, -GRAVITY_Y);
+			if (app->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT) vel = b2Vec2(0, -speed);
+			if (app->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT) vel = b2Vec2(0, speed);
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) vel = b2Vec2(-speed, 0);
+			if (app->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT) vel = b2Vec2(speed, 0);
 
 		}
 
 		if (keys == InputKeys::IJKL) {
 
-			if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, -speed);
-			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, speed);
-			if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) vel = b2Vec2(-speed, -GRAVITY_Y);
-			if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) vel = b2Vec2(speed, -GRAVITY_Y);
+			if (app->input->GetKey(SDL_SCANCODE_I) == KEY_REPEAT) vel = b2Vec2(0, -speed);
+			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) vel = b2Vec2(0, speed);
+			if (app->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT) vel = b2Vec2(-speed, 0);
+			if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) vel = b2Vec2(speed, 0);
 
 		}
 
 		if (keys == InputKeys::ARROWS) {
 
-			if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, -speed);
-			if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) vel = b2Vec2(GRAVITY_X, speed);
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) vel = b2Vec2(-speed, -GRAVITY_Y);
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) vel = b2Vec2(speed, -GRAVITY_Y);
+			if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) vel = b2Vec2(0, -speed);
+			if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) vel = b2Vec2(0, speed);
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) vel = b2Vec2(-speed, 0);
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) vel = b2Vec2(speed, 0);
 
 		}
 
