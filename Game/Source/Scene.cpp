@@ -96,7 +96,7 @@ bool Scene::Update(float dt)
 		CreateCameras(DisplayType::TWO_HORIZONTAL);
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		CreateCameras(DisplayType::THREE_CENTERED);
+		CreateCameras(DisplayType::THREE_SCREENS);
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 		CreateCameras(DisplayType::FOUR_SCREENS);
@@ -147,7 +147,7 @@ void Scene::CreateCameras(DisplayType display)
 		}
 		app->render->ClearCameras();
 	}
-	else if (display == DisplayType::THREE_LEFT || display == DisplayType::THREE_CENTERED || display == DisplayType::THREE_RIGHT)
+	else if (display == DisplayType::THREE_SCREENS)
 	{
 		while (players.Count() > 3)
 		{
@@ -173,7 +173,7 @@ void Scene::CreateCameras(DisplayType display)
 
 		}
 	}
-	else if ((display == DisplayType::THREE_LEFT || display == DisplayType::THREE_CENTERED || display == DisplayType::THREE_RIGHT) && players.Count() < 3)
+	else if ((display == DisplayType::THREE_SCREENS) && players.Count() < 3)
 	{
 		while (players.Count() < 3)
 		{
@@ -193,56 +193,30 @@ void Scene::CreateCameras(DisplayType display)
 	switch (display)
 	{
 	case DisplayType::ONE_SCREEN:
-
-		app->render->AddCamera({ 0, 0, 1280, 720 });
-
+		app->render->AddCamera({ 0, 0, 1024, 768 });
 		break;
 
 	case DisplayType::TWO_HORIZONTAL:
-
-		app->render->AddCamera({ 2, 2, 1276, 357 });
-		app->render->AddCamera({ 2, 361, 1276, 357 });
-
+		app->render->AddCamera({ 2, 2, 1024, 384 });
+		app->render->AddCamera({ 2, 388, 1024, 384 });
 		break;
 
 	case DisplayType::TWO_VERTICAL:
-
-		app->render->AddCamera({ 2, 2, 637, 716 });
-		app->render->AddCamera({ 641, 2, 637, 716 });
-
+		app->render->AddCamera({ 2, 2, 512, 768 });
+		app->render->AddCamera({ 516, 2, 512, 768 });
 		break;
 
-	case DisplayType::THREE_LEFT:
-
-		app->render->AddCamera({ 2, 2, 637, 357 });
-		app->render->AddCamera({ 641, 2, 637, 357 });
-		app->render->AddCamera({ 2, 361, 637, 357 });
-
-		break;
-
-	case DisplayType::THREE_CENTERED:
-
-		app->render->AddCamera({ 2, 2, 637, 357 });
-		app->render->AddCamera({ 641, 2, 637, 357 });
-		app->render->AddCamera({ 321, 361, 637, 357 });
-
-		break;
-
-	case DisplayType::THREE_RIGHT:
-
-		app->render->AddCamera({ 2, 2, 637, 357 });
-		app->render->AddCamera({ 641, 2, 637, 357 });
-		app->render->AddCamera({ 641, 361, 637, 357 });
-
+	case DisplayType::THREE_SCREENS:
+		app->render->AddCamera({ 2, 2, 512, 384 });
+		app->render->AddCamera({ 516, 2, 512, 384 });
+		app->render->AddCamera({ 2, 388, 1024, 384 });
 		break;
 
 	case DisplayType::FOUR_SCREENS:
-
-		app->render->AddCamera({ 2, 2, 637, 357 });
-		app->render->AddCamera({ 641, 2, 637, 357 });
-		app->render->AddCamera({ 2, 361, 637, 357 });
-		app->render->AddCamera({ 641, 361, 637, 357 });
-
+		app->render->AddCamera({ 2, 2, 512, 384 });
+		app->render->AddCamera({ 516, 2, 512, 384 });
+		app->render->AddCamera({ 2, 388, 512, 384 });
+		app->render->AddCamera({ 516, 388, 512, 384 });
 		break;
 
 	}
