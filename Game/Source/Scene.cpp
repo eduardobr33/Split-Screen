@@ -88,6 +88,19 @@ bool Scene::Update(float dt)
 	// NEW -> Update the map
 	app->map->Update(dt);
 
+	// NEW -> Create dinamically the cameras for the players
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		CreateCameras(DisplayType::ONE_SCREEN);
+
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		CreateCameras(DisplayType::TWO_HORIZONTAL);
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		CreateCameras(DisplayType::THREE_CENTERED);
+
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		CreateCameras(DisplayType::FOUR_SCREENS);
+
 	return true;
 }
 
@@ -113,6 +126,70 @@ bool Scene::CleanUp()
 // NEW -> function to create the necessary cameras to display the chosen DisplayType (Hardcoded).
 void Scene::CreateCameras(DisplayType display)
 {
+	// Borra los jugadores sobrantes si se están creando menos cámaras que jugadores
+	if (display == DisplayType::ONE_SCREEN)
+	{
+		while (players.Count() > 1)
+		{
+			Player* playerToRemove = players.At(players.Count() - 1)->data;
+			players.Del(players.At(players.Count() - 1));
+			app->entityManager->DestroyEntity(playerToRemove);
+		}
+		app->render->ClearCameras();
+	}
+	else if (display == DisplayType::TWO_HORIZONTAL || display == DisplayType::TWO_VERTICAL)
+	{
+		while (players.Count() > 2)
+		{
+			Player* playerToRemove = players.At(players.Count() - 1)->data;
+			players.Del(players.At(players.Count() - 1));
+			app->entityManager->DestroyEntity(playerToRemove);
+		}
+		app->render->ClearCameras();
+	}
+	else if (display == DisplayType::THREE_LEFT || display == DisplayType::THREE_CENTERED || display == DisplayType::THREE_RIGHT)
+	{
+		while (players.Count() > 3)
+		{
+			Player* playerToRemove = players.At(players.Count() - 1)->data;
+			players.Del(players.At(players.Count() - 1));
+			app->entityManager->DestroyEntity(playerToRemove);
+		}
+		app->render->ClearCameras();
+	}
+
+	// Crea los jugadores faltantes si se estan creando mas camaras que jugadores
+	/* NO FUNCIONA
+	if ((display == DisplayType::TWO_HORIZONTAL || display == DisplayType::TWO_VERTICAL) && players.Count() < 2)
+	{
+		// Crea un nuevo jugador
+		Player* newPlayer = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+		for (pugi::xml_node playerNode = config.child("player"); playerNode; playerNode = playerNode.next_sibling("player"))
+		{
+			Player* player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			player->parameters = playerNode;
+
+			players.Add(player);
+
+		}
+	}
+	else if ((display == DisplayType::THREE_LEFT || display == DisplayType::THREE_CENTERED || display == DisplayType::THREE_RIGHT) && players.Count() < 3)
+	{
+		while (players.Count() < 3)
+		{
+			// Crea un nuevo jugador
+			Player* newPlayer = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+		}
+	}
+	else if (display == DisplayType::FOUR_SCREENS && players.Count() < 3)
+	{
+		while (players.Count() < 3)
+		{
+			// Crea un nuevo jugador
+			Player* newPlayer = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+		}
+	}*/
+
 	switch (display)
 	{
 	case DisplayType::ONE_SCREEN:
